@@ -1,1 +1,1 @@
-# mini2440-linux4.9
+# mini2440-dt-linux4.9
