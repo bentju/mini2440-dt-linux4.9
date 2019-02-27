@@ -45,3 +45,17 @@
 &uart0 {
 	status = "okay";
 };
+
+&i2c {
+	status = "okay";
+	samsung,i2c-max-bus-freq = <200000>;
+
+	eeprom@50 {
+		compatible = "24c02";
+		reg = <0x50>;
+		pagesize = <32>;
+		status = "okay";
+	};
+};
+
+

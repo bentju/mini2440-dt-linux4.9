@@ -61,7 +61,7 @@
 		clock-names = "rtc";
 	};
 
-	i2c@54000000 {
+	i2c: i2c@54000000 {
 		compatible = "samsung,s3c2440-i2c";
 		clocks = <&clocks PCLK_I2C>;
 		clock-names = "i2c";
