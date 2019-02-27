@@ -1,0 +1,30 @@
+/*
+ * SAMSUNG MINI2440 board device tree source
+ */
+
+/dts-v1/;
+#include "s3c2440.dtsi"
+
+/ {
+	model = "MINI2440";
+	compatible = "samsung,s3c2440", "samsung,mini2440";
+
+	memory {
+		reg =  <0x30000000 0x34000000>;
+	};
+
+	chosen {
+		bootargs = "noinitrd root=/dev/mtdblock3 init=/linuxrc console=ttySAC0,115200 ignore_loglevel earlyprintk";
+	};
+};
+&watchdog {
+	status = "okay";
+};
+
+&rtc {
+	status = "okay";
+};
+
+&uart0 {
+	status = "okay";
+};
