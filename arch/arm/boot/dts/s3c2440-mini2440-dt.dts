@@ -4,6 +4,8 @@
 
 /dts-v1/;
 #include "s3c2440.dtsi"
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/input/input.h>
 #include <dt-bindings/interrupt-controller/irq.h>
 
 / {
@@ -33,7 +35,50 @@
 			davicom,no-eeprom;
 		};
 	};
+	gpio-keys{
+	    compatible = "gpio-keys";
+            #address-cells = <1>;
+            #size-cells = <0>;
+		
+            button1{
+	        label = "button1";
+                gpios = <&gpg 0 GPIO_ACTIVE_LOW>;
+                linux,code = <KEY_1>;
+                gpio-key,wakeup;
+            };
+            button2{
+	        label = "button2";
+                gpios = <&gpg 3 GPIO_ACTIVE_LOW>;
+                linux,code = <KEY_2>;
+                gpio-key,wakeup;
+            };
+            button3{
+	        label = "button3";
+                gpios = <&gpg 5 GPIO_ACTIVE_LOW>;
+                linux,code = <KEY_3>;
+                gpio-key,wakeup;
+            };
+            button4{
+                label = "button4";
+		gpios = <&gpg 6 GPIO_ACTIVE_LOW>;
+		linux,code = <KEY_4>;
+		gpio-key,wakeup;
+            };
+            button5{
+                label = "button5";
+		gpios = <&gpg 7 GPIO_ACTIVE_LOW>;
+		linux,code = <KEY_5>;
+		gpio-key,wakeup;
+            };
+            button6{
+	        label = "button6";
+                gpios = <&gpg 11 GPIO_ACTIVE_LOW>;
+	        linux,code = <KEY_6>;
+                gpio-key,wakeup;
+            };
+	};
 };
+
 &watchdog {
 	status = "okay";
 };
@@ -58,4 +103,59 @@
 	};
 };
 
+&nand0 {
+	status = "okay";
+	nand,tacls = <0xa>;
+	nand,twrph0 = <0x19>;
+	nand,twrph1 = <0xa>;
 
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	partitions {
+		/* MTD partition table */
+		#address-cells = <1>;
+		#size-cells = <1>;
+		nr-chips = <1>;
+		set-name = "mini2440-0";
+
+		partition@0 {
+			label = "SPL";
+			reg = <0x0000000 0x100000>;
+			read-only;
+		};
+
+		partition@100000 {
+			label = "U-BOOT";
+			reg = <0x0100000 0x100000>;
+			read-only;
+		};
+
+		partition@200000 {
+			label = "PARAMS";
+			reg = <0x0200000 0x100000>;
+			read-only;
+		};
+
+		partition@300000 {
+			label = "KERNEL";
+			reg = <0x300000 0x500000>;
+			read-only;
+		};
+
+		partition@600000 {
+			label = "DTB";
+			reg = <0x800000 0x100000>;
+			read-only;
+		};
+
+		partition@700000 {
+			label = "ROOTFS";
+			reg = <0x900000 0x0>;
+		};
+	};
+};
+
+&usb_ohci {
+	status = "okay";
+};
